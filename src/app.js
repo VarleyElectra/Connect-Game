@@ -1,4 +1,6 @@
 import * as PIXI from 'pixi.js';
+import Game from "./Game";
+import {Utils} from "./Blob";
 
 let type = "WebGL";
 if (!PIXI.utils.isWebGLSupported()) {
@@ -17,19 +19,36 @@ const Application = PIXI.Application,
     Text = PIXI.Text,
     Rectangle = PIXI.Rectangle;
 
-const app = new Application({
-    width: window.innerWidth,         
-    height: window.innerHeight,        
-    antialias: true,    
-    transparent: false, 
-    resolution: 1,       
-    backgroundColor: 0xfef8eb,
-}
-);
+// const app = new Application({
+//         width: window.innerWidth,
+//         height: window.innerHeight,
+//         antialias: true,
+//         transparent: false,
+//         resolution: 1,
+//         backgroundColor: 0xfef8eb,
+//         position: "absolute",
+//         display: "block",
+//     }
+// );
 
-app.renderer.view.style.position = "absolute";
-app.renderer.view.style.display = "block";
-app.renderer.autoDensity = true;
-app.resizeTo = window;
-document.body.appendChild(app.view);
+const game = new Game({
+    width: window.innerWidth,
+    height: window.innerHeight,
+    antialias: true,
+    transparent: false,
+    resolution: 1,
+    backgroundColor: 0xfef8eb,
+    position: "absolute",
+    display: "block",
+});
+game.renderer.autoDensity = true;
+game.resizeTo = window;
+document.body.appendChild(game.view);
+window.game = game;
+window.Utils = Utils;
+
+loader
+    .add("images/atlas.json")
+    .load(game.init.bind(game))
+
 

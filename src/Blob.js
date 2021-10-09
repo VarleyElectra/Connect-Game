@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+import DataStorage from "./DataStorage";
 
 const BLOB_COLORS = {
     BLUE: 'blue',
@@ -8,7 +9,7 @@ const BLOB_COLORS = {
     VIOLET: 'violet'
 }
 
-const Utils = {
+export const Utils = {
     getBlobTextureByColor (color) {
         let spriteSheet = PIXI.Loader.shared.resources["images/atlas.json"].textures;
         if (color === BLOB_COLORS.BLUE) {
@@ -26,29 +27,81 @@ const Utils = {
         if (color === BLOB_COLORS.VIOLET) {
             return spriteSheet['violet circle.png']
         }
+    },
+
+    getRandomNumber(min, max) {
+       return Math.floor(min + Math.random() * (max + 1 - min));
+    },
+
+    getBlobColor(colorPosition) {
+        return Object.values(BLOB_COLORS)[colorPosition];
+    },
+
+    updateCurrentValues() {
+        const game = window.game;
+        //Апдейт значения текущего хода
+        if (Number(game.dataStorage.currentStep) === 0) {
+            alert('Вы проиграли');
+            game.dataStorage.clear();
+            game.init();
+        } else {
+            game.level.stepsPanel.children[0].text = game.dataStorage.currentStep;
+            game.level.stepsPanel.children[0].position.set(game.level.stepsPanel.width / 2 -
+                game.level.stepsPanel.children[0].width / 2, 5);
+        }
+        //Апдейт текущих тасок
+        if (Number(game.dataStorage.currentTaskCount1) < Number(game.dataStorage.maxCountTask1)) {
+            game.level.panel.children[0].text.text = `${game.dataStorage.currentTaskCount1}/${game.dataStorage.maxCountTask1}`
+        } else {
+            //Логика наклеивания иконки завершения таски
+        }
+        if (Number(game.dataStorage.currentTaskCount2) < Number(game.dataStorage.maxCountTask2)) {
+            game.level.panel.children[1].text.text = `${game.dataStorage.currentTaskCount2}/${game.dataStorage.maxCountTask2}`
+        } else {
+            //Логика наклеивания иконки завершения таски
+        }
+        //Апдейт значения уровня
+        if (Number(game.dataStorage.currentTaskCount1) >= Number(game.dataStorage.maxCountTask1) &&
+            Number(game.dataStorage.currentTaskCount2) >= Number(game.dataStorage.maxCountTask2)) {
+            const newCurrentLevel = Number(game.dataStorage.currentLevel) + 1;
+            const newMaxCountTask1 = Number(game.dataStorage.maxCountTask1) + 1;
+            const newMaxCountTask2 = Number(game.dataStorage.maxCountTask2) + 1;
+            game.dataStorage.clear();
+            let newDataStorage = new DataStorage(newCurrentLevel, 0, 0,
+                newMaxCountTask1, newMaxCountTask2,
+                50, 50);
+            newDataStorage.init();
+            game.level.init(newDataStorage);
+        }
+        game.level.levelPanel.children[0].text = game.dataStorage.currentLevel;
     }
 }
 
-export default class Blob extends PIXI.Sprite {
+export class Blob extends PIXI.Sprite {
     constructor (color) {
         const texture = Utils.getBlobTextureByColor(color);
         super(texture);
 
         this.id = Symbol();
-        this.interavtive = true;
+        this.interactive = true;
         this.buttonMode = true;
         this.color = color;
+        this.anchor.set(0.5);
         this.on("pointerup", this.doPointerUp);
         this.on("pointerdown", this.doPointerDown);
     }
 
     doPointerUp() {
-        this.scale.x /= 2;
-        this.scale.y /= 2;
+        this.scale.x = 1;
+        this.scale.y = 1;
+        window.game.dataStorage.currentStep -= 1;
+        window.game.dataStorage.currentTaskCount1 = `${+window.game.dataStorage.currentTaskCount1 + 1}`;
+        window.game.dataStorage.currentTaskCount2 = `${+window.game.dataStorage.currentTaskCount2 + 1}`;
+        Utils.updateCurrentValues();
     }
 
     doPointerDown() {
-        this.scale.x *= 2;
-        this.scale.y *= 2;
+        this.scale.x = 1.25;
+        this.scale.y = 1.25;
     }
 }

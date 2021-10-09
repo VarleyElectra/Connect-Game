@@ -1,5 +1,6 @@
 export default class DataStorage {
-    constructor(currentLevel, currentTaskCount1, currentTaskCount2, maxCountTask1, maxCountTask2, maxSteps, currentStep, circleSpriteMatrix) {
+    constructor(currentLevel, currentTaskCount1, currentTaskCount2, maxCountTask1,
+                maxCountTask2, maxSteps, currentStep, circleSpriteMatrix) {
         this._currentLevel = localStorage.getItem("currentLevel") || currentLevel;
         this._currentTaskCount1 = localStorage.getItem("currentTaskCount1") || currentTaskCount1;
         this._currentTaskCount2 = localStorage.getItem("currentTaskCount2") || currentTaskCount2;
@@ -43,6 +44,11 @@ export default class DataStorage {
     set currentStep(value) {
         this._currentStep= value;
         localStorage.setItem("currentStep", `${value}`);
+    }
+
+    set circleSpriteMatrix(value) {
+        this._circleSpriteMatrix = value;
+        localStorage.setItem("circleSpriteMatrix", JSON.stringify(value));
     }
 
     get currentLevel() {
@@ -105,13 +111,14 @@ export default class DataStorage {
     }
 
     clear() {
-        this._currentLevel = null;
-        this._currentTaskCount1 = null;
-        this._currentTaskCount2 = null;
-        this._maxCountTask1 = null;
-        this._maxCountTask2 = null;
-        this._maxSteps = null;
-        this._currentStep = null;
+        // this._currentLevel = null;
+        // this._currentTaskCount1 = null;
+        // this._currentTaskCount2 = null;
+        // this._maxCountTask1 = null;
+        // this._maxCountTask2 = null;
+        // this._maxSteps = null;
+        // this._currentStep = null;
+        // this._circleSpriteMatrix = null;
         localStorage.clear();
     }
 }

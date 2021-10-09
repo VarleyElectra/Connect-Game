@@ -6,5 +6,14 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'build'), 
     filename: 'bundle.js' 
-  }
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(png|json)$/,
+        include: /src\/images/,
+        use: 'file-loader',
+      },
+    ],
+  },
 };
