@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js';
 import DataStorage from "./DataStorage";
+import {GAME_MATRIX_SIZE, GAME_MAX_STEPS} from "./constants";
 
 const BLOB_COLORS = {
     BLUE: 'blue',
@@ -10,7 +11,7 @@ const BLOB_COLORS = {
 }
 
 export const Utils = {
-    getBlobTextureByColor (color) {
+    getBlobTextureByColor(color) {
         let spriteSheet = PIXI.Loader.shared.resources["images/atlas.json"].textures;
         if (color === BLOB_COLORS.BLUE) {
             return spriteSheet['blue circle.png'];
@@ -37,8 +38,23 @@ export const Utils = {
         return Object.values(BLOB_COLORS)[colorPosition];
     },
 
+    createBlobColorsMatrix(matrixSize) {
+        let blobColorsMatrix = [];
+        for (let i = 0; i < matrixSize; i++) {
+            let blobColorsSubMatrix = [];
+            for (let j = 0; j < matrixSize; j++) {
+                let rand = this.getRandomNumber(0, Object.values(BLOB_COLORS).length - 1);
+                let color = this.getBlobColor(rand);
+                blobColorsSubMatrix.push(color);
+            }
+            blobColorsMatrix.push(blobColorsSubMatrix);
+        }
+        return blobColorsMatrix;
+    },
+
     updateCurrentValues() {
         const game = window.game;
+
         //Апдейт значения текущего хода
         if (Number(game.dataStorage.currentStep) === 0) {
             alert('Вы проиграли');
@@ -49,6 +65,7 @@ export const Utils = {
             game.level.stepsPanel.children[0].position.set(game.level.stepsPanel.width / 2 -
                 game.level.stepsPanel.children[0].width / 2, 5);
         }
+
         //Апдейт текущих тасок
         if (Number(game.dataStorage.currentTaskCount1) < Number(game.dataStorage.maxCountTask1)) {
             game.level.panel.children[0].text.text = `${game.dataStorage.currentTaskCount1}/${game.dataStorage.maxCountTask1}`
@@ -60,6 +77,7 @@ export const Utils = {
         } else {
             //Логика наклеивания иконки завершения таски
         }
+
         //Апдейт значения уровня
         if (Number(game.dataStorage.currentTaskCount1) >= Number(game.dataStorage.maxCountTask1) &&
             Number(game.dataStorage.currentTaskCount2) >= Number(game.dataStorage.maxCountTask2)) {
@@ -67,13 +85,20 @@ export const Utils = {
             const newMaxCountTask1 = Number(game.dataStorage.maxCountTask1) + 1;
             const newMaxCountTask2 = Number(game.dataStorage.maxCountTask2) + 1;
             game.dataStorage.clear();
+            let newGameFieldMatrix = Utils.createBlobColorsMatrix(GAME_MATRIX_SIZE);
             let newDataStorage = new DataStorage(newCurrentLevel, 0, 0,
                 newMaxCountTask1, newMaxCountTask2,
-                50, 50);
+                GAME_MAX_STEPS, GAME_MAX_STEPS, newGameFieldMatrix);
             newDataStorage.init();
             game.level.init(newDataStorage);
         }
         game.level.levelPanel.children[0].text = game.dataStorage.currentLevel;
+
+        //Апдейт игрового поля
+        game.level.gameField.init();
+
+        //Апдейт цветов тасок
+
     }
 }
 

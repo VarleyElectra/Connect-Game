@@ -1,6 +1,6 @@
 export default class DataStorage {
     constructor(currentLevel, currentTaskCount1, currentTaskCount2, maxCountTask1,
-                maxCountTask2, maxSteps, currentStep, circleSpriteMatrix) {
+                maxCountTask2, maxSteps, currentStep, blobColorsMatrix) {
         this._currentLevel = localStorage.getItem("currentLevel") || currentLevel;
         this._currentTaskCount1 = localStorage.getItem("currentTaskCount1") || currentTaskCount1;
         this._currentTaskCount2 = localStorage.getItem("currentTaskCount2") || currentTaskCount2;
@@ -8,7 +8,7 @@ export default class DataStorage {
         this._maxCountTask2 = localStorage.getItem("maxCountTask2") || maxCountTask2;
         this._maxSteps = localStorage.getItem("maxSteps") || maxSteps;
         this._currentStep = localStorage.getItem("currentStep") || currentStep;
-        this._circleSpriteMatrix = localStorage.getItem("circleSpriteMatrix") || circleSpriteMatrix;
+        this._blobColorsMatrix = localStorage.getItem("blobColorsMatrix") || blobColorsMatrix;
     }
 
     set currentLevel(value) {
@@ -46,9 +46,9 @@ export default class DataStorage {
         localStorage.setItem("currentStep", `${value}`);
     }
 
-    set circleSpriteMatrix(value) {
-        this._circleSpriteMatrix = value;
-        localStorage.setItem("circleSpriteMatrix", JSON.stringify(value));
+    set blobColorsMatrix(value) {
+        this._blobColorsMatrix = value;
+        localStorage.setItem("blobColorsMatrix", JSON.stringify(value));
     }
 
     get currentLevel() {
@@ -79,8 +79,8 @@ export default class DataStorage {
         return localStorage.getItem("currentStep");
     }
 
-    get circleSpriteMatrix() {
-        return JSON.parse(localStorage.getItem('circleSpriteMatrix'));
+    get blobColorsMatrix() {
+        return JSON.parse(localStorage.getItem('blobColorsMatrix'));
     }
 
     init() {
@@ -105,8 +105,8 @@ export default class DataStorage {
         if(!localStorage.getItem("currentStep")) {
             localStorage.setItem("currentStep", `${this._currentStep}`);
         }
-        if(!localStorage.getItem("circleSpriteMatrix")) {
-            localStorage.setItem("circleSpriteMatrix", JSON.stringify(this._circleSpriteMatrix));
+        if(!localStorage.getItem("blobColorsMatrix")) {
+            localStorage.setItem("blobColorsMatrix", JSON.stringify(this._blobColorsMatrix));
         }
     }
 
@@ -118,7 +118,7 @@ export default class DataStorage {
         // this._maxCountTask2 = null;
         // this._maxSteps = null;
         // this._currentStep = null;
-        // this._circleSpriteMatrix = null;
+        // this._blobColorsMatrix = null;
         localStorage.clear();
     }
 }

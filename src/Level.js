@@ -3,7 +3,7 @@ import {Blob, Utils} from "./Blob";
 import Task from "./Task";
 import GameField from "./GameField";
 import {taskTextStyle, bigNumberTextStyle} from "./constants";
-
+import {GAME_MATRIX_SIZE, GAME_MATRIX_SPACING} from "./constants";
 
 export default class Level extends PIXI.Container{
     constructor(levelWidth, levelHeight) {
@@ -73,10 +73,11 @@ export default class Level extends PIXI.Container{
 
 
         //Создание игрового поля
-        this.gameField = new GameField(75, 6);
+        this.gameField = new GameField(GAME_MATRIX_SPACING, GAME_MATRIX_SIZE);
         this.gameField.init();
         this.addChild(this.gameField);
-        this.gameField.x = (this.levelWidth / 2) - (this.gameField.width / 2) + (this.gameField.children[0].width / 2);
+        this.gameField.x = (this.levelWidth / 2) - (this.gameField.width / 2) +
+            (this.gameField.children[0].width / 2);
         this.gameField.y = (this.levelHeight / 2) - (this.gameField.height / 2);
     }
 

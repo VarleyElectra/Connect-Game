@@ -28,16 +28,14 @@ export default class GameField extends PIXI.Container {
     }
 
     drawField() {
-        for (let x = 0; x < this.blobDimensionCount * this.spacing; x += this.spacing) {
+        for (let i = 0; i < this.blobDimensionCount; i++) {
+            const x = this.spacing * i;
 
-            for (let i = 0; i < this.blobDimensionCount; i++) {
+            for (let j = 0; j < this.blobDimensionCount; j++) {
+                let blob =  new Blob(game.dataStorage.blobColorsMatrix[i][j]);
+                const y = this.spacing * j;
 
-                let blob =  new Blob(Utils.getBlobColor(Utils.getRandomNumber(0, 4)));
-                const y = this.spacing * i;
-
-                blob.x = x;
-                blob.y = y;
-
+                blob.position.set(x, y);
                 this.addChild(blob);
             }
         }
