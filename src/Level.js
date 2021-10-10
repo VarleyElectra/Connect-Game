@@ -1,7 +1,6 @@
 import * as PIXI from 'pixi.js';
 import {Blob, Utils} from "./Blob";
 import Task from "./Task";
-import DataStorage from "./DataStorage";
 import GameField from "./GameField";
 import {taskTextStyle, bigNumberTextStyle} from "./constants";
 
@@ -37,8 +36,8 @@ export default class Level extends PIXI.Container{
         this.panel.addChild(this.task1);
         this.panel.addChild(this.task2);
 
-       this.task1.position.set(45, 25);
-       this.task2.position.set(this.panel.width - 45, 25);
+       this.task1.position.set(55, 25);
+       this.task2.position.set(this.panel.width - 55, 25);
 
 
         //Создание панели уровня
