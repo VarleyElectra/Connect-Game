@@ -52,31 +52,31 @@ export default class DataStorage {
     }
 
     get currentLevel() {
-        return localStorage.getItem("currentLevel");
+        return +localStorage.getItem("currentLevel");
     }
 
     get currentTaskCount1() {
-        return localStorage.getItem("currentTaskCount1");
+        return +localStorage.getItem("currentTaskCount1");
     }
 
     get currentTaskCount2() {
-        return localStorage.getItem("currentTaskCount2");
+        return +localStorage.getItem("currentTaskCount2");
     }
 
     get maxCountTask1() {
-        return localStorage.getItem("maxCountTask1");
+        return +localStorage.getItem("maxCountTask1");
     }
 
     get maxCountTask2() {
-        return localStorage.getItem("maxCountTask2");
+        return +localStorage.getItem("maxCountTask2");
     }
 
     get maxSteps() {
-        return localStorage.getItem("maxSteps");
+        return +localStorage.getItem("maxSteps");
     }
 
     get currentStep() {
-        return localStorage.getItem("currentStep");
+        return +localStorage.getItem("currentStep");
     }
 
     get blobColorsMatrix() {

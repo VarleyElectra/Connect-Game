@@ -56,7 +56,7 @@ export const Utils = {
         const game = window.game;
 
         //Апдейт значения текущего хода
-        if (Number(game.dataStorage.currentStep) === 0) {
+        if (game.dataStorage.currentStep === 0) {
             alert('Вы проиграли');
             game.dataStorage.clear();
             game.init();
@@ -67,23 +67,23 @@ export const Utils = {
         }
 
         //Апдейт текущих тасок
-        if (Number(game.dataStorage.currentTaskCount1) < Number(game.dataStorage.maxCountTask1)) {
+        if (game.dataStorage.currentTaskCount1 < game.dataStorage.maxCountTask1) {
             game.level.panel.children[0].text.text = `${game.dataStorage.currentTaskCount1}/${game.dataStorage.maxCountTask1}`
         } else {
             //Логика наклеивания иконки завершения таски
         }
-        if (Number(game.dataStorage.currentTaskCount2) < Number(game.dataStorage.maxCountTask2)) {
+        if (game.dataStorage.currentTaskCount2 < game.dataStorage.maxCountTask2) {
             game.level.panel.children[1].text.text = `${game.dataStorage.currentTaskCount2}/${game.dataStorage.maxCountTask2}`
         } else {
             //Логика наклеивания иконки завершения таски
         }
 
         //Апдейт значения уровня
-        if (Number(game.dataStorage.currentTaskCount1) >= Number(game.dataStorage.maxCountTask1) &&
-            Number(game.dataStorage.currentTaskCount2) >= Number(game.dataStorage.maxCountTask2)) {
-            const newCurrentLevel = Number(game.dataStorage.currentLevel) + 1;
-            const newMaxCountTask1 = Number(game.dataStorage.maxCountTask1) + 1;
-            const newMaxCountTask2 = Number(game.dataStorage.maxCountTask2) + 1;
+        if (game.dataStorage.currentTaskCount1 >= game.dataStorage.maxCountTask1 &&
+            game.dataStorage.currentTaskCount2 >= game.dataStorage.maxCountTask2) {
+            const newCurrentLevel = game.dataStorage.currentLevel + 1;
+            const newMaxCountTask1 = game.dataStorage.maxCountTask1 + 1;
+            const newMaxCountTask2 = game.dataStorage.maxCountTask2 + 1;
             game.dataStorage.clear();
             let newGameFieldMatrix = Utils.createBlobColorsMatrix(GAME_MATRIX_SIZE);
             let newDataStorage = new DataStorage(newCurrentLevel, 0, 0,
