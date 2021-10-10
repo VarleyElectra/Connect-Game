@@ -22,8 +22,8 @@ export default class Level extends PIXI.Container{
         //Создание панели с тасками
         let randomNum1 = Utils.getRandomNumber(0, this.texturesNames.length - 1);
         let randomNum2 = randomNum1 === 0 ? 1 : randomNum1 - 1;
-        this.blobTask1 = new Blob(Utils.getBlobColor(randomNum1));
-        this.blobTask2 = new Blob(Utils.getBlobColor(randomNum2));
+        this.blobTask1 = new Blob(dataStorage.task1Color);
+        this.blobTask2 = new Blob(dataStorage.task2Color);
 
         this.panel = new PIXI.Sprite(this.spriteTextures["panel.png"]);
         this.panel.position.set(this.levelWidth / 2 - this.panel.width / 2, 10);

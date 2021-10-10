@@ -1,6 +1,6 @@
 export default class DataStorage {
     constructor(currentLevel, currentTaskCount1, currentTaskCount2, maxCountTask1,
-                maxCountTask2, maxSteps, currentStep, blobColorsMatrix) {
+                maxCountTask2, maxSteps, currentStep, blobColorsMatrix, task1Color, task2Color) {
         this._currentLevel = localStorage.getItem("currentLevel") || currentLevel;
         this._currentTaskCount1 = localStorage.getItem("currentTaskCount1") || currentTaskCount1;
         this._currentTaskCount2 = localStorage.getItem("currentTaskCount2") || currentTaskCount2;
@@ -9,6 +9,8 @@ export default class DataStorage {
         this._maxSteps = localStorage.getItem("maxSteps") || maxSteps;
         this._currentStep = localStorage.getItem("currentStep") || currentStep;
         this._blobColorsMatrix = localStorage.getItem("blobColorsMatrix") || blobColorsMatrix;
+        this._task1Color = localStorage.getItem("task1Color") || task1Color;
+        this._task2Color = localStorage.getItem("task2Color") || task2Color;
     }
 
     set currentLevel(value) {
@@ -51,6 +53,16 @@ export default class DataStorage {
         localStorage.setItem("blobColorsMatrix", JSON.stringify(value));
     }
 
+    set task1Color(value) {
+        this._task1Color = value;
+        localStorage.setItem("task1Color", `${value}`);
+    }
+
+    set task2Color(value) {
+        this._task1Color = value;
+        localStorage.setItem("task2Color", `${value}`);
+    }
+
     get currentLevel() {
         return +localStorage.getItem("currentLevel");
     }
@@ -83,6 +95,14 @@ export default class DataStorage {
         return JSON.parse(localStorage.getItem('blobColorsMatrix'));
     }
 
+    get task1Color() {
+        return localStorage.getItem("task1Color");
+    }
+
+    get task2Color() {
+        return localStorage.getItem("task2Color");
+    }
+
     init() {
         if(!localStorage.getItem("currentLevel")) {
             localStorage.setItem("currentLevel", `${this._currentLevel}`);
@@ -107,6 +127,12 @@ export default class DataStorage {
         }
         if(!localStorage.getItem("blobColorsMatrix")) {
             localStorage.setItem("blobColorsMatrix", JSON.stringify(this._blobColorsMatrix));
+        }
+        if(!localStorage.getItem("task1Color")) {
+            localStorage.setItem("task1Color", `${this._task1Color}`);
+        }
+        if(!localStorage.getItem("task2Color")) {
+            localStorage.setItem("task2Color", `${this._task2Color}`);
         }
     }
 
