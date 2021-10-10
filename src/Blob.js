@@ -78,12 +78,15 @@ export const Utils = {
             //Логика наклеивания иконки завершения таски
         }
 
-        //Апдейт значения уровня
+        //Апдейт уровня
         if (game.dataStorage.currentTaskCount1 >= game.dataStorage.maxCountTask1 &&
             game.dataStorage.currentTaskCount2 >= game.dataStorage.maxCountTask2) {
+            alert('Вы прошли уровень');
+
             const newCurrentLevel = game.dataStorage.currentLevel + 1;
             const newMaxCountTask1 = game.dataStorage.maxCountTask1 + 1;
             const newMaxCountTask2 = game.dataStorage.maxCountTask2 + 1;
+
             game.dataStorage.clear();
             let newGameFieldMatrix = Utils.createBlobColorsMatrix(GAME_MATRIX_SIZE);
             let newDataStorage = new DataStorage(newCurrentLevel, 0, 0,
