@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js';
-import {Blob, Utils} from "./Blob";
+import {Blob} from "./Blob";
+import {Utils} from "./Utils";
 import Task from "./Task";
 import GameField from "./GameField";
 import {taskTextStyle, bigNumberTextStyle} from "./constants";
@@ -20,8 +21,6 @@ export default class Level extends PIXI.Container{
 
     init(dataStorage) {
         //Создание панели с тасками
-        let randomNum1 = Utils.getRandomNumber(0, this.texturesNames.length - 1);
-        let randomNum2 = randomNum1 === 0 ? 1 : randomNum1 - 1;
         this.blobTask1 = new Blob(dataStorage.task1Color);
         this.blobTask2 = new Blob(dataStorage.task2Color);
 

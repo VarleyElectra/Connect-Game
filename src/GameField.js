@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js';
-import {Blob, Utils} from './Blob.js'
+import {Blob} from './Blob.js';
 
 export default class GameField extends PIXI.Container {
     constructor(spacing, blobDimensionCount) {

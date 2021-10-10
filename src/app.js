@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 import Game from "./Game";
 //Нужно для отладки, потом удалить!!!
-import {Utils} from "./Blob";
+import {Utils} from "./Utils";
 
 let type = "WebGL";
 if (!PIXI.utils.isWebGLSupported()) {

@@ -137,14 +137,6 @@ export default class DataStorage {
     }
 
     clear() {
-        // this._currentLevel = null;
-        // this._currentTaskCount1 = null;
-        // this._currentTaskCount2 = null;
-        // this._maxCountTask1 = null;
-        // this._maxCountTask2 = null;
-        // this._maxSteps = null;
-        // this._currentStep = null;
-        // this._blobColorsMatrix = null;
         localStorage.clear();
     }
 }
