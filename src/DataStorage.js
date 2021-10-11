@@ -1,3 +1,5 @@
+import {Utils} from "./Utils";
+
 export default class DataStorage {
     constructor(currentLevel, currentTaskCount1, currentTaskCount2, maxCountTask1,
                 maxCountTask2, maxSteps, currentStep, blobColorsMatrix, task1Color, task2Color) {
@@ -16,51 +18,61 @@ export default class DataStorage {
     set currentLevel(value) {
         this._currentLevel = value;
         localStorage.setItem("currentLevel", `${value}`);
+        Utils.updateView();
     }
 
     set currentTaskCount1(value) {
         this._currentTaskCount1 = value;
         localStorage.setItem("currentTaskCount1", `${value}`);
+        Utils.updateView();
     }
 
     set currentTaskCount2(value) {
         this._currentTaskCount2 = value;
         localStorage.setItem("currentTaskCount2", `${value}`);
+        Utils.updateView();
     }
 
     set maxCountTask1(value) {
         this._maxCountTask1 = value;
         localStorage.setItem("maxCountTask1", `${value}`);
+        Utils.updateView();
     }
 
     set maxCountTask2(value) {
         this._maxCountTask2 = value;
         localStorage.setItem("maxCountTask2", `${value}`);
+        Utils.updateView();
     }
 
     set maxSteps(value) {
         this._maxSteps = value;
         localStorage.setItem("maxSteps", `${value}`);
+        Utils.updateView();
     }
 
     set currentStep(value) {
         this._currentStep= value;
         localStorage.setItem("currentStep", `${value}`);
+        Utils.updateView();
     }
 
     set blobColorsMatrix(value) {
         this._blobColorsMatrix = value;
         localStorage.setItem("blobColorsMatrix", JSON.stringify(value));
+        Utils.updateView();
     }
 
     set task1Color(value) {
         this._task1Color = value;
         localStorage.setItem("task1Color", `${value}`);
+        Utils.updateView();
     }
 
     set task2Color(value) {
         this._task1Color = value;
         localStorage.setItem("task2Color", `${value}`);
+        Utils.updateView();
     }
 
     get currentLevel() {

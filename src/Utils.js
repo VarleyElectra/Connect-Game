@@ -1,5 +1,7 @@
-import {BLOB_COLORS, GAME_MATRIX_SIZE, GAME_MAX_STEPS} from "./constants";
+import {BLOB_COLORS, GAME_MATRIX_SIZE, GAME_MAX_STEPS, taskTextStyle} from "./constants";
 import DataStorage from "./DataStorage";
+import {Blob} from "./Blob"
+import Task from "./Task";
 
 export const Utils = {
     getRandomNumber(min, max) {
@@ -24,7 +26,7 @@ export const Utils = {
         return blobColorsMatrix;
     },
 
-    updateCurrentValues() {
+    updateView() {
         const game = window.game;
 
         //Апдейт значения текущего хода

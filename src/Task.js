@@ -7,10 +7,10 @@ export default class Task extends PIXI.Container {
         this.blob.interactive = false;
         this.addChild(blob);
 
-        this._currentTaskCount = currentTaskCount;
+        this.currentTaskCount = currentTaskCount;
         this.maxTaskCount = maxTaskCount;
         this.textStyle = textStyle;
-        this.text = new PIXI.Text(`${currentTaskCount}/${maxTaskCount}`, this.textStyle);
+        this.text = new PIXI.Text(`${this.currentTaskCount}/${this.maxTaskCount}`, this.textStyle);
         this.text.anchor.set(0.5, 0);
         this.addChild(this.text);
         this.text.position.set(0, this.blob.height / 2);

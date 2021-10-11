@@ -43,7 +43,7 @@ export class Blob extends PIXI.Sprite {
         window.game.dataStorage.currentStep -= 1;
         window.game.dataStorage.currentTaskCount1 = `${+window.game.dataStorage.currentTaskCount1 + 1}`;
         window.game.dataStorage.currentTaskCount2 = `${+window.game.dataStorage.currentTaskCount2 + 1}`;
-        Utils.updateCurrentValues();
+        Utils.updateView();
     }
 
     doPointerDown() {
