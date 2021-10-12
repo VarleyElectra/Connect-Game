@@ -8,6 +8,8 @@ export default class GameField extends PIXI.Container {
         super();
         this.spacing = spacing;
         this.blobDimensionCount = blobDimensionCount;
+        this.width = 600;
+        this.height = 600;
 
         this.blobWidth = new Blob('red').width;
         this.blobHeight = new Blob('red').height;
@@ -35,24 +37,26 @@ export default class GameField extends PIXI.Container {
     }
 
     pointerUp(e) {
-        this.isDown = false
+        this.isDown = false;
+        this.lines.forEach(line => line.destroy());
+        this.lines = [];
+        if (this.blobChain.length >= 2) {
+            this.blobChain.forEach(blob => blob.destroy());
+        }
+        this.blobChain = [];
+        this.currentBlob = null;
     }
 
     pointerDown(e) {
-        if (e.target) {
+        if (e.target instanceof Blob) {
             this.isDown = true;
             let line =  new Line([e.target.x, e.target.y, e.target.x, e.target.y],
                 10, BLOB_COLORS_DIGITS[e.target.color]);
             line.zIndex = -1;
             this.addChild(line);
             this.lines.push(line);
-            console.log(`Down: e.x${e.target.x}, e.y:${e.target.y}`)
-            // this.currentBlob = e.target;
-            // this.currentBlob.addChild(this.line);
-            console.log(line)
-            // this.currentBlob
-            // console.log(e.target.x);
-            // console.log(e.target.y);
+            this.currentBlob = e.target;
+            this.blobChain = [this.currentBlob];
         }
     }
 
@@ -66,51 +70,46 @@ export default class GameField extends PIXI.Container {
     //     }
     // }
 
+    get movingLine() {
+        return this.lines[this.lines.length - 1];
+    }
+
     move(e) {
-        // let xSpace = 0;
-        // let ySpace = 0;
-        // if (e.target) {
-        //     xSpace = e.target.x;
-        //     ySpace = e.target.y
-        // }
-        // console.log(`x${this.currentBlob.x} y${this.currentBlob.y}`)
-        if (this.isDown) {
-            this.lines[this.lines.length - 1].updatePoints([null, null, e.data.global.x - game.level.gameField.x,
-                e.data.global.y - game.level.gameField.y]);
+        if (!this.isDown) {
+            return;
+        }
+        this.movingLine.updatePoints([null, null, e.data.global.x - game.level.gameField.x,
+            e.data.global.y - game.level.gameField.y]);
+
+        if (e.target && e.target instanceof Blob && this.canAddBlob(e.target)
+            && this.lines.length !== 0) {
+            this.blobChain.push(e.target);
+            this.movingLine.updatePoints([null, null, e.target.x,
+                e.target.y]);
+            let line =  new Line([e.target.x, e.target.y, e.target.x, e.target.y],
+                10, BLOB_COLORS_DIGITS[e.target.color]);
+            line.zIndex = -1;
+            this.addChild(line);
+            this.lines.push(line);
         }
 
-        // if (e.target) {
-        //     this.line.lineColor = BLOB_COLORS_DIGITS[e.target.color]
-        // }
+    }
 
-        // console.log(e.data.global.y);
-        // console.log(this.width);
-        // const {x, y} = event.position;
-        //
-        // if (
-        //     (Math.abs(x - this.currentBlub.x - this.spacing) < this.currentBlub.width) &&
-        //     (Math.abs(y - this.currentBlub.y) < this.currentBlub.y)
-        // ) {
-        //     const blob = this.blobByPosition[Math.floor(x / this.spacing)][Math.floor(y / this.spacing)];
-        //
-        //     if (blob.color === this.currentBlub.color) {
-        //         this.blobChain.push(this.currentBlub);
-        //         this.currentBlub = blob;
-        //     }
-        // }
-        //
-        // this.line.clear();
-        // this.line.moveTo.set(this.currentBlub.x, this.currentBlub.y);
-        // this.line.lineTo(x,y);
+    canAddBlob(blob) {
+        const lastBlob = this.blobChain[this.blobChain.length - 1];
+        return blob.color === this.currentBlob.color && lastBlob.id !== blob.id && (
+            blob.x === lastBlob.x && Math.abs(blob.y - lastBlob.y) === this.spacing || blob.y === lastBlob.y
+        && Math.abs(blob.x - lastBlob.x) === this.spacing
+        );
     }
 
     drawField() {
         for (let i = 0; i < this.blobDimensionCount; i++) {
-            const x = this.spacing * i;
+            const x = this.spacing * i + 20;
 
             for (let j = 0; j < this.blobDimensionCount; j++) {
                 let blob =  new Blob(game.dataStorage.blobColorsMatrix[i][j]);
-                const y = this.spacing * j;
+                const y = this.spacing * j + 20;
 
                 blob.position.set(x, y);
                 this.addChild(blob);
