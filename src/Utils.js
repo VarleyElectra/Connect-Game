@@ -43,13 +43,16 @@ export const Utils = {
         //Апдейт текущих тасок
         if (game.dataStorage.currentTaskCount1 <= game.dataStorage.maxCountTask1) {
             game.level.panel.children[0].text.text = `${game.dataStorage.currentTaskCount1}/${game.dataStorage.maxCountTask1}`
-        } else {
-            //Логика наклеивания иконки завершения таски
         }
+        if (game.dataStorage.currentTaskCount1 === game.dataStorage.maxCountTask1) {
+            game.level.panel.children[0].children[0].children[0].visible = true;
+        }
+
         if (game.dataStorage.currentTaskCount2 <= game.dataStorage.maxCountTask2) {
             game.level.panel.children[1].text.text = `${game.dataStorage.currentTaskCount2}/${game.dataStorage.maxCountTask2}`
-        } else {
-            //Логика наклеивания иконки завершения таски
+        }
+        if (game.dataStorage.currentTaskCount2 === game.dataStorage.maxCountTask2) {
+            game.level.panel.children[1].children[0].children[0].visible = true;
         }
 
         //Апдейт уровня

@@ -28,6 +28,14 @@ export default class Level extends PIXI.Container{
         this.panel.position.set(this.levelWidth / 2 - this.panel.width / 2, 10);
         this.addChild(this.panel);
 
+        this.done = new PIXI.Sprite(this.spriteTextures["done.png"]);
+        this.done.anchor.set(0.5);
+        this.done.visible = false;
+
+        this.done1 = new PIXI.Sprite(this.spriteTextures["done.png"]);
+        this.done1.anchor.set(0.5);
+        this.done1.visible = false;
+
         this.task1 = new Task(this.blobTask1, dataStorage.currentTaskCount1,
             dataStorage.maxCountTask1, taskTextStyle);
         this.task2 = new Task(this.blobTask2, dataStorage.currentTaskCount2,
@@ -38,6 +46,8 @@ export default class Level extends PIXI.Container{
        this.task1.position.set(55, 25);
        this.task2.position.set(this.panel.width - 55, 25);
 
+        game.level.panel.children[0].children[0].addChild(this.done);
+        game.level.panel.children[1].children[0].addChild(this.done1);
 
         //Создание панели уровня
         this.levelPanel = new PIXI.Sprite(this.spriteTextures["steps.png"]);
