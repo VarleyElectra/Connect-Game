@@ -31,22 +31,22 @@ export class Blob extends PIXI.Sprite {
         this.id = Symbol();
         this.interactive = true;
         this.buttonMode = true;
+        this.sortableChildren = true;
         this.color = color;
         this.anchor.set(0.5);
-        this.on("pointerup", this.doPointerUp);
-        this.on("pointerdown", this.doPointerDown);
+        this.on("pointerover", this.enter);
+        this.on("pointerout", this.leave);
     }
 
-    doPointerUp() {
+    leave() {
         this.scale.x = 1;
         this.scale.y = 1;
-        window.game.dataStorage.currentStep -= 1;
-        window.game.dataStorage.currentTaskCount1 = `${+window.game.dataStorage.currentTaskCount1 + 1}`;
-        window.game.dataStorage.currentTaskCount2 = `${+window.game.dataStorage.currentTaskCount2 + 1}`;
-        Utils.updateView();
+        // window.game.dataStorage.currentStep -= 1;
+        // window.game.dataStorage.currentTaskCount1 = `${+window.game.dataStorage.currentTaskCount1 + 1}`;
+        // window.game.dataStorage.currentTaskCount2 = `${+window.game.dataStorage.currentTaskCount2 + 1}`;
     }
 
-    doPointerDown() {
+    enter() {
         this.scale.x = 1.25;
         this.scale.y = 1.25;
     }

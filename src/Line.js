@@ -19,7 +19,7 @@ export default class Line extends PIXI.Graphics {
         let points = (this.points = p.map(
             (val, index) => val || this.points[index]
         ));
-        console.log(p);
+        // console.log(p);
         let s = this.lineWidth,
             c = this.lineColor;
 

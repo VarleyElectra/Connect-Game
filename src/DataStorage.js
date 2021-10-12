@@ -22,15 +22,19 @@ export default class DataStorage {
     }
 
     set currentTaskCount1(value) {
-        this._currentTaskCount1 = value;
-        localStorage.setItem("currentTaskCount1", `${value}`);
-        Utils.updateView();
+        if (value <= this.maxCountTask1) {
+            this._currentTaskCount1 = value;
+            localStorage.setItem("currentTaskCount1", `${value}`);
+            Utils.updateView();
+        }
     }
 
     set currentTaskCount2(value) {
-        this._currentTaskCount2 = value;
-        localStorage.setItem("currentTaskCount2", `${value}`);
-        Utils.updateView();
+        if (value <= this.maxCountTask2) {
+            this._currentTaskCount2 = value;
+            localStorage.setItem("currentTaskCount2", `${value}`);
+            Utils.updateView();
+        }
     }
 
     set maxCountTask1(value) {

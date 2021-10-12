@@ -13,3 +13,11 @@ export const BLOB_COLORS = {
     ORANGE: 'orange',
     VIOLET: 'violet'
 }
+
+export const BLOB_COLORS_DIGITS = {
+    blue: 0x5c626e,
+    red: 0xb8625e,
+    green: 0x56a56d,
+    orange: 0xd5a36a,
+    violet: 0x9673a1
+}
