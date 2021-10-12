@@ -15,7 +15,7 @@ export const BLOB_COLORS = {
 }
 
 export const BLOB_COLORS_DIGITS = {
-    blue: 0x5c626e,
+    blue: 0x717a92,
     red: 0xb8625e,
     green: 0x56a56d,
     orange: 0xd5a36a,
