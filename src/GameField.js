@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 import {Blob} from './Blob.js';
-import Line from "./Line";
+import StraightLine from "./StraightLine";
 import {BLOB_COLORS_DIGITS} from "./constants"
 
 export default class GameField extends PIXI.Container {
@@ -18,7 +18,7 @@ export default class GameField extends PIXI.Container {
         this.blobChain = [];
 
         this.interactive = true;
-        this.line =  new Line([0, 0, 0, 0], 10, BLOB_COLORS_DIGITS['red']);
+        this.line =  new StraightLine([0, 0, 0, 0], 10, BLOB_COLORS_DIGITS['red']);
         this.lines = []
         // this.addChild(this.line);
 
@@ -50,7 +50,7 @@ export default class GameField extends PIXI.Container {
     pointerDown(e) {
         if (e.target instanceof Blob) {
             this.isDown = true;
-            let line =  new Line([e.target.x, e.target.y, e.target.x, e.target.y],
+            let line =  new StraightLine([e.target.x, e.target.y, e.target.x, e.target.y],
                 10, BLOB_COLORS_DIGITS[e.target.color]);
             line.zIndex = -1;
             this.addChild(line);
@@ -59,16 +59,6 @@ export default class GameField extends PIXI.Container {
             this.blobChain = [this.currentBlob];
         }
     }
-
-    // pointerUp(e) {
-    //     if (e.target) {
-    //         this.line.updatePoints([null, null, e.target.x, e.target.y])
-    //         console.log(`UP: e.x:${e.target.x}, e.y:${e.target.y}`);
-    //         // this.currentBlob
-    //         // console.log(e.target.x);
-    //         // console.log(e.target.y);
-    //     }
-    // }
 
     get movingLine() {
         return this.lines[this.lines.length - 1];
@@ -86,7 +76,7 @@ export default class GameField extends PIXI.Container {
             this.blobChain.push(e.target);
             this.movingLine.updatePoints([null, null, e.target.x,
                 e.target.y]);
-            let line =  new Line([e.target.x, e.target.y, e.target.x, e.target.y],
+            let line =  new StraightLine([e.target.x, e.target.y, e.target.x, e.target.y],
                 10, BLOB_COLORS_DIGITS[e.target.color]);
             line.zIndex = -1;
             this.addChild(line);
@@ -114,24 +104,6 @@ export default class GameField extends PIXI.Container {
                 blob.position.set(x, y);
                 this.addChild(blob);
             }
-        }
-    }
-
-    // initLevel() {
-    //     for (let blobSettings of level) {
-    //         const blob = new Blob(blobSettings.color);
-    //         blob.position.set(blobSettings.x * this.spacing, blobSettings.y * this.spacing)
-    //
-    //         this.blobByPosition[x][y] = blob;
-    //
-    //         blob.on('pointerdown', this.selectBlob.bind(this, blob));
-    //     }
-    // }
-
-    selectBlob(blob) {
-        if (this.currentBlub && this.currentBlub.id !== blob.id) {
-            this.blobChain.push(this.currentBlub);
-            this.currentBlub = blob;
         }
     }
 }
