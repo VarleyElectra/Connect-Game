@@ -11,18 +11,12 @@ export default class GameField extends PIXI.Container {
         this.width = 600;
         this.height = 600;
 
-        this.blobWidth = new Blob('red').width;
-        this.blobHeight = new Blob('red').height;
-
         this.currentBlob = null;
         this.blobChain = [];
 
         this.interactive = true;
-        this.line =  new StraightLine([0, 0, 0, 0], 10, BLOB_COLORS_DIGITS['red']);
         this.lines = []
-        // this.addChild(this.line);
 
-        this.blobByPosition = [];
         this.isDown = false;
         this.sortableChildren = true;
     }
@@ -32,8 +26,6 @@ export default class GameField extends PIXI.Container {
         this.on('pointermove', this.move.bind(this));
         this.on('pointerdown', this.pointerDown.bind(this));
         this.on('pointerup', this.pointerUp.bind(this));
-        // // this.on('pointermove', (e) => console.log(`x:${e.data.global.x}, y:${e.data.global.y}`));
-        // this.on('pointerup', () => console.log('pointerUp'));
     }
 
     pointerUp(e) {
