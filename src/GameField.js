@@ -19,6 +19,9 @@ export default class GameField extends PIXI.Container {
 
         this.isDown = false;
         this.sortableChildren = true;
+
+        this.task1Color = game.dataStorage.task1Color;
+        this.task2Color = game.dataStorage.task2Color;
     }
 
     init() {
@@ -33,8 +36,19 @@ export default class GameField extends PIXI.Container {
         this.lines.forEach(line => line.destroy());
         this.lines = [];
         if (this.blobChain.length >= 2) {
-            this.blobChain.forEach(blob => blob.destroy());
+            let blobColor = this.blobChain[0].color;
+            this.blobChain.forEach(blob => {
+                console.log(blob.position);
+                blob.destroy();
+                if (blobColor === this.task1Color) {
+                    game.dataStorage.currentTaskCount1 += 1;
+                }
+                if (blobColor === this.task2Color) {
+                    game.dataStorage.currentTaskCount2 += 1;
+                }
+            });
         }
+
         this.blobChain = [];
         this.currentBlob = null;
     }

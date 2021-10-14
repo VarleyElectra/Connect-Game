@@ -154,5 +154,6 @@ export default class DataStorage {
 
     clear() {
         localStorage.clear();
+        location.reload();
     }
 }

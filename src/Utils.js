@@ -1,7 +1,5 @@
-import {BLOB_COLORS, GAME_MATRIX_SIZE, GAME_MAX_STEPS, taskTextStyle} from "./constants";
+import {BLOB_COLORS, GAME_MATRIX_SIZE, GAME_MAX_STEPS} from "./constants";
 import DataStorage from "./DataStorage";
-import {Blob} from "./Blob"
-import Task from "./Task";
 
 export const Utils = {
     getRandomNumber(min, max) {
@@ -56,30 +54,33 @@ export const Utils = {
         }
 
         //Апдейт уровня
-        if (game.dataStorage.currentTaskCount1 >= game.dataStorage.maxCountTask1 &&
-            game.dataStorage.currentTaskCount2 >= game.dataStorage.maxCountTask2) {
-            alert('Вы прошли уровень');
+        setTimeout(() => {
+            if (game.dataStorage.currentTaskCount1 >= game.dataStorage.maxCountTask1 &&
+                game.dataStorage.currentTaskCount2 >= game.dataStorage.maxCountTask2) {
+                alert('Вы прошли уровень');
 
-            const newCurrentLevel = game.dataStorage.currentLevel + 1;
-            const newMaxCountTask1 = game.dataStorage.maxCountTask1 + 1;
-            const newMaxCountTask2 = game.dataStorage.maxCountTask2 + 1;
+                const newCurrentLevel = game.dataStorage.currentLevel + 1;
+                const newMaxCountTask1 = game.dataStorage.maxCountTask1 + 1;
+                const newMaxCountTask2 = game.dataStorage.maxCountTask2 + 1;
 
-            let randomNum1 = Utils.getRandomNumber(0, Object.values(BLOB_COLORS).length - 1);
-            let randomNum2 = randomNum1 === 0 ? 1 : randomNum1 - 1;
-            let newBlobTask1Color = Utils.getBlobColor(randomNum1);
-            let newBlobTask2Color = Utils.getBlobColor(randomNum2);
+                let randomNum1 = Utils.getRandomNumber(0, Object.values(BLOB_COLORS).length - 1);
+                let randomNum2 = randomNum1 === 0 ? 1 : randomNum1 - 1;
+                let newBlobTask1Color = Utils.getBlobColor(randomNum1);
+                let newBlobTask2Color = Utils.getBlobColor(randomNum2);
 
-            game.dataStorage.clear();
-            let newGameFieldMatrix = Utils.createBlobColorsMatrix(GAME_MATRIX_SIZE);
-            let newDataStorage = new DataStorage(newCurrentLevel, 0, 0,
-                newMaxCountTask1, newMaxCountTask2,
-                GAME_MAX_STEPS, GAME_MAX_STEPS, newGameFieldMatrix, newBlobTask1Color, newBlobTask2Color);
-            newDataStorage.init();
-            game.level.init(newDataStorage);
-        }
-        game.level.levelPanel.children[0].text = game.dataStorage.currentLevel;
+                localStorage.clear();
+                let newGameFieldMatrix = Utils.createBlobColorsMatrix(GAME_MATRIX_SIZE);
+                let newDataStorage = new DataStorage(newCurrentLevel, 0, 0,
+                    newMaxCountTask1, newMaxCountTask2,
+                    GAME_MAX_STEPS, GAME_MAX_STEPS, newGameFieldMatrix, newBlobTask1Color, newBlobTask2Color);
+                newDataStorage.init();
+                game.level.init(newDataStorage);
+                location.reload();
+            }
+            game.level.levelPanel.children[0].text = game.dataStorage.currentLevel;
+        }, 50);
 
         //Апдейт игрового поля
-        game.level.gameField.init();
+        // game.level.gameField.init();
     }
 }
