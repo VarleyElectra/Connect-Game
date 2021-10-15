@@ -12,7 +12,7 @@ export default class GameField extends PIXI.Container {
         this.width = 600;
         this.height = 600;
 
-        this.currentBlob = null;
+        this.chainStartBlob = null;
         this.blobChain = [];
 
         this.interactive = true;
@@ -32,7 +32,7 @@ export default class GameField extends PIXI.Container {
         this.on('pointerup', this.pointerUp.bind(this));
     }
 
-    pointerUp(e) {
+    pointerUp() {
         this.isDown = false;
         this.lines.forEach(line => line.destroy());
         this.lines = [];
@@ -113,7 +113,7 @@ export default class GameField extends PIXI.Container {
             })
             game.dataStorage.currentStep -= 1;
         }
-        this.currentBlob = null;
+        this.chainStartBlob = null;
     }
 
     pointerDown(e) {
@@ -124,8 +124,8 @@ export default class GameField extends PIXI.Container {
             line.zIndex = -1;
             this.addChild(line);
             this.lines.push(line);
-            this.currentBlob = e.target;
-            this.blobChain = [this.currentBlob];
+            this.chainStartBlob = e.target;
+            this.blobChain = [this.chainStartBlob];
         }
     }
 
@@ -146,24 +146,29 @@ export default class GameField extends PIXI.Container {
 
         if (e.target && e.target instanceof Blob && this.canAddBlob(e.target)
             && this.lines.length !== 0) {
-            this.blobChain.push(e.target);
-            this.movingLine.updatePoints([null, null, e.target.x,
-                e.target.y]);
-            let line =  new StraightLine([e.target.x, e.target.y, e.target.x, e.target.y],
-                10, BLOB_COLORS_DIGITS[e.target.color]);
-            line.zIndex = -1;
-            this.addChild(line);
-            this.lines.push(line);
+                this.blobChain.push(e.target);
+                this.movingLine.updatePoints([null, null, e.target.x,
+                    e.target.y]);
+                let line =  new StraightLine([e.target.x, e.target.y, e.target.x, e.target.y],
+                    10, BLOB_COLORS_DIGITS[e.target.color]);
+                line.zIndex = -1;
+                this.addChild(line);
+                this.lines.push(line);
         }
 
     }
 
     canAddBlob(blob) {
         const lastBlob = this.blobChain[this.blobChain.length - 1];
-        return blob.color === this.currentBlob.color && lastBlob.id !== blob.id && (
-            blob.x === lastBlob.x && Math.abs(blob.y - lastBlob.y) === this.spacing || blob.y === lastBlob.y
-        && Math.abs(blob.x - lastBlob.x) === this.spacing
-        );
+        for (let i = 0; i < this.blobChain.length - 1; i++) {
+            if (this.blobChain[i].id === blob.id) {
+                return false;
+            }
+        }
+
+        return blob.color === this.chainStartBlob.color && lastBlob.id !== blob.id && (
+            blob.x === lastBlob.x && Math.abs(blob.y - lastBlob.y) === this.spacing ||
+            blob.y === lastBlob.y && Math.abs(blob.x - lastBlob.x) === this.spacing);
     }
 
     async moveBlobs(target, from, to) {
