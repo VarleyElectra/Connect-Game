@@ -1,6 +1,5 @@
 import * as PIXI from 'pixi.js';
 import {Blob} from "./Blob";
-import {Utils} from "./Utils";
 import Task from "./Task";
 import GameField from "./GameField";
 import {taskTextStyle, bigNumberTextStyle} from "./constants";
@@ -88,6 +87,4 @@ export default class Level extends PIXI.Container{
             (this.gameField.children[0].width / 2);
         this.gameField.y = (this.levelHeight / 2) - (this.gameField.height / 2);
     }
-
-
 }

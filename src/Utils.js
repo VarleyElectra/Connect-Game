@@ -79,8 +79,5 @@ export const Utils = {
             }
             game.level.levelPanel.children[0].text = game.dataStorage.currentLevel;
         }, 50);
-
-        //Апдейт игрового поля
-        // game.level.gameField.init();
     }
 }

@@ -41,9 +41,6 @@ export class Blob extends PIXI.Sprite {
     leave() {
         this.scale.x = 1;
         this.scale.y = 1;
-        // window.game.dataStorage.currentStep -= 1;
-        // window.game.dataStorage.currentTaskCount1 = `${+window.game.dataStorage.currentTaskCount1 + 1}`;
-        // window.game.dataStorage.currentTaskCount2 = `${+window.game.dataStorage.currentTaskCount2 + 1}`;
     }
 
     enter() {
