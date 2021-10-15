@@ -12,7 +12,7 @@ export default class Level extends PIXI.Container{
 
         this.levelWidth = levelWidth;
         this.levelHeight = levelHeight;
-        this.spriteTextures = this.resources["images/atlas.json"].textures;
+        this.spriteTextures = this.resources["./src/images/atlas.json"].textures;
 
     }
 

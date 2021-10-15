@@ -4,7 +4,7 @@ import {BLOB_COLORS} from "./constants";
 
 export const BlobUtils = {
     getBlobTextureByColor(color) {
-        let spriteSheet = PIXI.Loader.shared.resources["images/atlas.json"].textures;
+        let spriteSheet = PIXI.Loader.shared.resources["./src/images/atlas.json"].textures;
         if (color === BLOB_COLORS.BLUE) {
             return spriteSheet['blue circle.png'];
         }

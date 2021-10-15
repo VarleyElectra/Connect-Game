@@ -24,7 +24,7 @@ document.body.appendChild(game.view);
 window.game = game;
 
 loader
-    .add("images/atlas.json")
+    .add("./src/images/atlas.json")
     .load(game.init.bind(game))
 
 
