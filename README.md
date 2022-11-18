@@ -1,3 +1,3 @@
 # Connect Game
-## To win connect in straight lines a certain number of blocks of the same color! 
+## Connect a certain number of blocks of the same color with rectangular lines to win!
 ## [Project link](https://varleyelectra.github.io/connect-game/)
